@@ -1,6 +1,24 @@
 import { INITIAL_TICKETS } from '../data/constants';
 
 const STORAGE_KEY = 'campus_helpdesk_tickets_v1';
+const THEME_STORAGE_KEY = 'campus_helpdesk_theme_v1';
+
+export function loadTheme() {
+  try {
+    return localStorage.getItem(THEME_STORAGE_KEY) === 'dark' ? 'dark' : 'light';
+  } catch (error) {
+    console.error('Failed to load theme from localStorage:', error);
+    return 'light';
+  }
+}
+
+export function saveTheme(theme) {
+  try {
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
+  } catch (error) {
+    console.error('Failed to save theme to localStorage:', error);
+  }
+}
 
 export function loadTickets() {
   try {
@@ -121,4 +139,3 @@ export function exportTicketsToCSV(tickets) {
   downloadAnchor.click();
   downloadAnchor.remove();
 }
-

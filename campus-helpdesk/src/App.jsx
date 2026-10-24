@@ -9,6 +9,8 @@ import { STATUSES } from './data/constants';
 import {
   loadTickets,
   saveTickets,
+  loadTheme,
+  saveTheme,
   generateTicketId,
   resetTicketsToDefault,
   clearAllTickets,
@@ -17,6 +19,7 @@ import './App.css';
 
 export default function App() {
   const [tickets, setTickets] = useState(() => loadTickets());
+  const [theme, setTheme] = useState(() => loadTheme());
   const [activeTab, setActiveTab] = useState('submit');
   const [selectedTicketId, setSelectedTicketId] = useState(null);
   const [toasts, setToasts] = useState([]);
@@ -25,6 +28,10 @@ export default function App() {
   useEffect(() => {
     saveTickets(tickets);
   }, [tickets]);
+
+  useEffect(() => {
+    saveTheme(theme);
+  }, [theme]);
 
   // Derived selected ticket to ensure fresh state
   const selectedTicket = useMemo(() => {
@@ -166,11 +173,13 @@ export default function App() {
   };
 
   return (
-    <div className="campus-app">
+    <div className="campus-app" data-theme={theme}>
       <Header
         activeTab={activeTab}
         onTabChange={setActiveTab}
         ticketStats={ticketStats}
+        theme={theme}
+        onThemeChange={setTheme}
       />
 
       <main className="app-main">

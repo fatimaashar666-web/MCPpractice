@@ -2,7 +2,14 @@
   --primary: #2563eb;
   --primary-hover: #1d4ed8;
   --primary-light: #eff6ff;
+  --primary-button: #2563eb;
+  --primary-button-hover: #1d4ed8;
   --primary-ring: rgba(37, 99, 235, 0.2);
+
+  --app-background: #f8fafc;
+  --surface: #ffffff;
+  --surface-hover: #fafbfc;
+  --surface-error: #fffafb;
 
   --slate-50: #f8fafc;
   --slate-100: #f1f5f9;
@@ -49,12 +56,56 @@
 
 body {
   font-family: var(--font-sans);
-  background-color: #f8fafc;
+  background-color: var(--app-background);
   color: var(--slate-800);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
+}
+
+.campus-app[data-theme='dark'] {
+  color-scheme: dark;
+
+  --primary: #60a5fa;
+  --primary-hover: #93c5fd;
+  --primary-light: #172554;
+  --primary-button: #2563eb;
+  --primary-button-hover: #1d4ed8;
+  --primary-ring: rgba(96, 165, 250, 0.35);
+
+  --app-background: #0b1220;
+  --surface: #111c2e;
+  --surface-hover: #1b2a40;
+  --surface-error: #3b1d2a;
+
+  --slate-50: #111c2e;
+  --slate-100: #1b2a40;
+  --slate-200: #2b3b52;
+  --slate-300: #41536b;
+  --slate-400: #94a3b8;
+  --slate-500: #aebdd0;
+  --slate-600: #c5d1df;
+  --slate-700: #d8e1ec;
+  --slate-800: #e8eef5;
+  --slate-900: #f8fafc;
+
+  --amber-500: #fbbf24;
+  --amber-100: #78350f;
+  --amber-50: #422006;
+
+  --emerald-600: #34d399;
+  --emerald-100: #064e3b;
+  --emerald-50: #022c22;
+
+  --rose-600: #fb7185;
+  --rose-100: #4c0519;
+  --rose-50: #500724;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.25), 0 2px 4px -1px rgba(0, 0, 0, 0.18);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.25);
 }
 
 #root {
