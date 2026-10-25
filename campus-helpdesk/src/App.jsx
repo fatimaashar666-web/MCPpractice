@@ -98,15 +98,25 @@ export default function App() {
 
   // Ticket status and note updates
   const handleUpdateStatus = (ticketId, newStatus, newNote) => {
+    let statusWasChanged = false;
+    let noteWasChanged = false;
+
     setTickets((prev) =>
       prev.map((t) => {
         if (t.id !== ticketId) return t;
 
-        const now = new Date().toISOString();
-        const updatedHistory = [...(t.history || [])];
-
         const statusChanged = Boolean(newStatus && newStatus !== t.status);
         const noteChanged = Boolean(newNote !== undefined && newNote !== t.adminNote);
+
+        if (!statusChanged && !noteChanged) {
+          return t;
+        }
+
+        statusWasChanged = statusChanged;
+        noteWasChanged = noteChanged;
+
+        const now = new Date().toISOString();
+        const updatedHistory = [...(t.history || [])];
 
         if (statusChanged && noteChanged) {
           updatedHistory.push({
@@ -138,13 +148,13 @@ export default function App() {
       })
     );
 
-    if (newStatus) {
+    if (statusWasChanged) {
       addToast(
         'info',
         'Status Updated',
         `Ticket ${ticketId} status changed to '${newStatus}'`
       );
-    } else if (newNote !== undefined) {
+    } else if (noteWasChanged) {
       addToast('success', 'Staff Note Saved', `Updated notes for ticket ${ticketId}`);
     }
   };

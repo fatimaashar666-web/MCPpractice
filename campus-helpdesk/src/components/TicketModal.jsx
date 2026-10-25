@@ -9,7 +9,14 @@ import { formatDate } from '../utils/storage';
 
 export default function TicketModal({ ticket, onClose, onUpdateStatus, onDeleteTicket }) {
   const [noteText, setNoteText] = useState(ticket?.adminNote || '');
+  const [prevAdminNote, setPrevAdminNote] = useState(ticket?.adminNote || '');
   const [copied, setCopied] = useState(false);
+
+  // Sync noteText if ticket's adminNote changes externally
+  if (ticket?.adminNote !== prevAdminNote) {
+    setPrevAdminNote(ticket?.adminNote || '');
+    setNoteText(ticket?.adminNote || '');
+  }
 
   // Dismiss modal on Escape key press
   useEffect(() => {
@@ -27,13 +34,13 @@ export default function TicketModal({ ticket, onClose, onUpdateStatus, onDeleteT
   const statusMeta = STATUS_META[ticket.status] || STATUS_META[STATUSES.PENDING];
   const priorityMeta = PRIORITY_META[ticket.priority] || PRIORITY_META.Medium;
 
-  const handleCopyId = () => {
+  const handleCopyId = async () => {
     try {
       if (navigator?.clipboard?.writeText) {
-        navigator.clipboard.writeText(ticket.id);
+        await navigator.clipboard.writeText(ticket.id);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
       }
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error('Failed to copy ticket ID to clipboard:', err);
     }
@@ -117,7 +124,13 @@ export default function TicketModal({ ticket, onClose, onUpdateStatus, onDeleteT
                           }
                         : {}
                     }
-                    onClick={() => onUpdateStatus(ticket.id, statusName)}
+                    onClick={() =>
+                      onUpdateStatus(
+                        ticket.id,
+                        statusName,
+                        noteText !== (ticket.adminNote || '') ? noteText : undefined
+                      )
+                    }
                   >
                     <span className="dot" style={{ backgroundColor: meta.color }}></span>
                     {statusName}

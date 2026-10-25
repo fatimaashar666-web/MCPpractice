@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { CATEGORIES, PRIORITIES, PRIORITY_META } from '../data/constants';
 
 export default function IssueForm({ onSubmitTicket, onTabChange }) {
@@ -15,6 +15,15 @@ export default function IssueForm({ onSubmitTicket, onTabChange }) {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const submitTimerRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (submitTimerRef.current) {
+        clearTimeout(submitTimerRef.current);
+      }
+    };
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -64,7 +73,7 @@ export default function IssueForm({ onSubmitTicket, onTabChange }) {
 
     setIsSubmitting(true);
 
-    setTimeout(() => {
+    submitTimerRef.current = setTimeout(() => {
       onSubmitTicket({
         ...formData,
         submitterName: formData.submitterName.trim(),

@@ -86,13 +86,13 @@ export default function AdminDashboard({
       const q = searchTerm.toLowerCase().trim();
       const matchesSearch =
         !q ||
-        t.id.toLowerCase().includes(q) ||
-        t.title.toLowerCase().includes(q) ||
+        (t.id && t.id.toLowerCase().includes(q)) ||
+        (t.title && t.title.toLowerCase().includes(q)) ||
         (t.studentId && t.studentId.toLowerCase().includes(q)) ||
-        t.submitterName.toLowerCase().includes(q) ||
-        t.submitterEmail.toLowerCase().includes(q) ||
-        t.location.toLowerCase().includes(q) ||
-        t.category.toLowerCase().includes(q);
+        (t.submitterName && t.submitterName.toLowerCase().includes(q)) ||
+        (t.submitterEmail && t.submitterEmail.toLowerCase().includes(q)) ||
+        (t.location && t.location.toLowerCase().includes(q)) ||
+        (t.category && t.category.toLowerCase().includes(q));
 
       const matchesStatus = filterStatus === 'ALL' || t.status === filterStatus;
       const matchesPriority = filterPriority === 'ALL' || t.priority === filterPriority;
@@ -664,7 +664,23 @@ export default function AdminDashboard({
                         ) : (
                           <div
                             className="admin-note-preview"
-                            onClick={() => setAdminNoteEdit({ id: t.id, text: t.adminNote || '' })}
+                            onClick={() => {
+                              if (
+                                adminNoteEdit.id &&
+                                adminNoteEdit.id !== t.id &&
+                                adminNoteEdit.text !==
+                                  (tickets.find((item) => item.id === adminNoteEdit.id)?.adminNote || '')
+                              ) {
+                                if (
+                                  !window.confirm(
+                                    'You have unsaved notes for another ticket. Discard them?'
+                                  )
+                                ) {
+                                  return;
+                                }
+                              }
+                              setAdminNoteEdit({ id: t.id, text: t.adminNote || '' });
+                            }}
                             title="Click to edit internal note"
                           >
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

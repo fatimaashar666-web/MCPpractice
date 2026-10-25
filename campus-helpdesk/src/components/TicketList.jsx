@@ -13,13 +13,13 @@ export default function TicketList({ tickets, onSelectTicket, onTabChange }) {
       const q = searchQuery.toLowerCase().trim();
       const matchesSearch =
         !q ||
-        t.id.toLowerCase().includes(q) ||
-        t.title.toLowerCase().includes(q) ||
+        (t.id && t.id.toLowerCase().includes(q)) ||
+        (t.title && t.title.toLowerCase().includes(q)) ||
         (t.studentId && t.studentId.toLowerCase().includes(q)) ||
-        t.submitterName.toLowerCase().includes(q) ||
-        t.submitterEmail.toLowerCase().includes(q) ||
-        t.location.toLowerCase().includes(q) ||
-        t.description.toLowerCase().includes(q);
+        (t.submitterName && t.submitterName.toLowerCase().includes(q)) ||
+        (t.submitterEmail && t.submitterEmail.toLowerCase().includes(q)) ||
+        (t.location && t.location.toLowerCase().includes(q)) ||
+        (t.description && t.description.toLowerCase().includes(q));
 
       const matchesStatus = statusFilter === 'ALL' || t.status === statusFilter;
       const matchesCategory = categoryFilter === 'ALL' || t.category === categoryFilter;
