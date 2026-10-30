@@ -13,6 +13,7 @@ import {
   exportTicketsToCSV,
   exportTicketsToJSON,
 } from '../utils/storage';
+import { translate } from '../utils/language';
 
 export default function AdminDashboard({
   tickets,
@@ -21,7 +22,9 @@ export default function AdminDashboard({
   onSelectTicket,
   onResetSeedData,
   onClearAll,
+  language,
 }) {
+  const t = (text) => translate(text, language);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('ALL');
   const [filterPriority, setFilterPriority] = useState('ALL');
@@ -113,9 +116,9 @@ export default function AdminDashboard({
       <div className="admin-header-row">
         <div>
           <div className="admin-portal-badge">
-            <span className="dot dot-emerald"></span> Operations Command Center
+            <span className="dot dot-emerald"></span> {t('Operations Command Center')}
           </div>
-          <h1 className="section-title">Helpdesk Administration & Analytics</h1>
+          <h1 className="section-title">{t('Helpdesk Administration & Analytics')}</h1>
           <p className="section-subtitle">
             Real-time status tracking, workload distribution, ticket reassignment, and service performance metrics.
           </p>
@@ -134,7 +137,7 @@ export default function AdminDashboard({
               <polyline points="7 10 12 15 17 10"></polyline>
               <line x1="12" y1="15" x2="12" y2="3"></line>
             </svg>
-            Export CSV
+            {t('Export CSV')}
           </button>
 
           <button
@@ -148,7 +151,7 @@ export default function AdminDashboard({
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
               <polyline points="14 2 14 8 20 8"></polyline>
             </svg>
-            Export JSON
+            {t('Export JSON')}
           </button>
 
           <button
@@ -160,7 +163,7 @@ export default function AdminDashboard({
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
             </svg>
-            Reset Sample Data
+            {t('Reset Sample Data')}
           </button>
 
           <button
@@ -174,7 +177,7 @@ export default function AdminDashboard({
               <polyline points="3 6 5 6 21 6"></polyline>
               <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
             </svg>
-            Clear All
+            {t('Clear All')}
           </button>
         </div>
       </div>
@@ -200,7 +203,7 @@ export default function AdminDashboard({
                 className="btn btn-secondary"
                 onClick={() => setShowConfirmReset(false)}
               >
-                Cancel
+                {t('Cancel')}
               </button>
               <button
                 type="button"
@@ -238,7 +241,7 @@ export default function AdminDashboard({
                 className="btn btn-secondary"
                 onClick={() => setShowConfirmClear(false)}
               >
-                Cancel
+                {t('Cancel')}
               </button>
               <button
                 type="button"
@@ -260,7 +263,7 @@ export default function AdminDashboard({
       <div className="stats-metric-grid">
         <div className="metric-card metric-total">
           <div className="metric-header">
-            <span className="metric-label">Total Tickets</span>
+            <span className="metric-label">{t('Total Tickets')}</span>
             <div className="metric-icon total-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -276,7 +279,7 @@ export default function AdminDashboard({
 
         <div className="metric-card metric-pending">
           <div className="metric-header">
-            <span className="metric-label">Pending</span>
+            <span className="metric-label">{t('Pending')}</span>
             <div className="metric-icon pending-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <circle cx="12" cy="12" r="10"></circle>
@@ -292,7 +295,7 @@ export default function AdminDashboard({
 
         <div className="metric-card metric-inprogress">
           <div className="metric-header">
-            <span className="metric-label">In Progress</span>
+            <span className="metric-label">{t('In Progress')}</span>
             <div className="metric-icon inprogress-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <line x1="18" y1="20" x2="18" y2="10"></line>
@@ -309,7 +312,7 @@ export default function AdminDashboard({
 
         <div className="metric-card metric-resolved">
           <div className="metric-header">
-            <span className="metric-label">Resolved</span>
+            <span className="metric-label">{t('Resolved')}</span>
             <div className="metric-icon resolved-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
@@ -325,7 +328,7 @@ export default function AdminDashboard({
 
         <div className="metric-card metric-urgent">
           <div className="metric-header">
-            <span className="metric-label">High / Urgent</span>
+            <span className="metric-label">{t('High / Urgent')}</span>
             <div className="metric-icon urgent-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>

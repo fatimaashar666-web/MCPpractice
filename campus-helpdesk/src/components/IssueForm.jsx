@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { CATEGORIES, PRIORITIES, PRIORITY_META } from '../data/constants';
+import { translate } from '../utils/language';
 
-export default function IssueForm({ onSubmitTicket, onTabChange }) {
+export default function IssueForm({ onSubmitTicket, onTabChange, language }) {
+  const t = (text) => translate(text, language);
   const [formData, setFormData] = useState({
     submitterName: '',
     submitterEmail: '',
@@ -120,12 +122,10 @@ export default function IssueForm({ onSubmitTicket, onTabChange }) {
       <div className="form-card">
         <div className="form-header">
           <div className="form-header-badge">
-            <span className="dot dot-pulse"></span> Open Service Request
+            <span className="dot dot-pulse"></span> {t('Open Service Request')}
           </div>
-          <h1 className="form-title">Submit a Campus Helpdesk Ticket</h1>
-          <p className="form-subtitle">
-            Need assistance with campus IT, dorm maintenance, academic resources, or facilities? Fill out this request and our support desk will respond promptly.
-          </p>
+          <h1 className="form-title">{t('Submit a Campus Helpdesk Ticket')}</h1>
+          <p className="form-subtitle">{t('Need assistance with campus IT, dorm maintenance, academic resources, or facilities? Fill out this request and our support desk will respond promptly.')}</p>
           <div className="quick-actions-bar">
             <button
               type="button"
@@ -136,7 +136,7 @@ export default function IssueForm({ onSubmitTicket, onTabChange }) {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
               </svg>
-              Auto-fill Sample Issue
+              {t('Auto-fill Sample Issue')}
             </button>
             <button
               type="button"
@@ -148,9 +148,9 @@ export default function IssueForm({ onSubmitTicket, onTabChange }) {
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
               </svg>
-              Track Existing Issues
+              {t('Track Existing Issues')}
             </button>
-            <span className="hint-text">All tickets are assigned status <strong>Pending</strong> initially</span>
+            <span className="hint-text">{t('All tickets are assigned status')} <strong>{t('Pending')}</strong> {t('initially')}</span>
           </div>
         </div>
 
@@ -159,7 +159,7 @@ export default function IssueForm({ onSubmitTicket, onTabChange }) {
             {/* Submitter Name */}
             <div className="form-group">
               <label htmlFor="submitterName">
-                Full Name <span className="req">*</span>
+                {t('Full Name')} <span className="req">*</span>
               </label>
               <input
                 type="text"
@@ -182,7 +182,7 @@ export default function IssueForm({ onSubmitTicket, onTabChange }) {
             {/* Submitter Email */}
             <div className="form-group">
               <label htmlFor="submitterEmail">
-                Campus Email <span className="req">*</span>
+                {t('Campus Email')} <span className="req">*</span>
               </label>
               <input
                 type="email"
@@ -205,7 +205,7 @@ export default function IssueForm({ onSubmitTicket, onTabChange }) {
             {/* Student / Staff ID */}
             <div className="form-group">
               <label htmlFor="studentId">
-                Student / Employee ID <span className="optional">(Optional)</span>
+                {t('Student / Employee ID')} <span className="optional">({t('Optional')})</span>
               </label>
               <input
                 type="text"
@@ -220,7 +220,7 @@ export default function IssueForm({ onSubmitTicket, onTabChange }) {
             {/* Campus Location */}
             <div className="form-group">
               <label htmlFor="location">
-                Location / Building / Room <span className="req">*</span>
+                {t('Location / Building / Room')} <span className="req">*</span>
               </label>
               <input
                 type="text"
@@ -245,7 +245,7 @@ export default function IssueForm({ onSubmitTicket, onTabChange }) {
             {/* Category */}
             <div className="form-group">
               <label htmlFor="category">
-                Issue Category <span className="req">*</span>
+                {t('Issue Category')} <span className="req">*</span>
               </label>
               <select
                 id="category"
@@ -264,7 +264,7 @@ export default function IssueForm({ onSubmitTicket, onTabChange }) {
             {/* Priority */}
             <div className="form-group">
               <span id="priority-label" style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--slate-700)' }}>
-                Urgency / Priority Level <span className="req">*</span>
+                {t('Urgency / Priority Level')} <span className="req">*</span>
               </span>
               <div
                 className="priority-selector"
@@ -309,13 +309,13 @@ export default function IssueForm({ onSubmitTicket, onTabChange }) {
           {/* Issue Subject */}
           <div className="form-group">
             <label htmlFor="title">
-              Issue Subject / Summary <span className="req">*</span>
+              {t('Issue Subject / Summary')} <span className="req">*</span>
             </label>
             <input
               type="text"
               id="title"
               name="title"
-              placeholder="Brief summary of the issue (e.g. Projector bulb burned out in Room 204)"
+                placeholder={t('Brief summary of the issue (e.g. Projector bulb burned out in Room 204)')}
               value={formData.title}
               onChange={handleChange}
               aria-invalid={Boolean(errors.title)}
@@ -332,13 +332,13 @@ export default function IssueForm({ onSubmitTicket, onTabChange }) {
           {/* Issue Description */}
           <div className="form-group">
             <label htmlFor="description">
-              Detailed Description <span className="req">*</span>
+              {t('Detailed Description')} <span className="req">*</span>
             </label>
             <textarea
               id="description"
               name="description"
               rows="5"
-              placeholder="Please provide specifics: when it started, error messages observed, troubleshooting tried, or exact room/equipment affected..."
+              placeholder={t('Please provide specifics: when it started, error messages observed, troubleshooting tried, or exact room/equipment affected...')}
               value={formData.description}
               onChange={handleChange}
               aria-invalid={Boolean(errors.description)}
@@ -381,7 +381,7 @@ export default function IssueForm({ onSubmitTicket, onTabChange }) {
                   setErrors({});
                 }}
               >
-                Clear Form
+                {t('Clear Form')}
               </button>
               <button
                 type="submit"
@@ -390,7 +390,7 @@ export default function IssueForm({ onSubmitTicket, onTabChange }) {
               >
                 {isSubmitting ? (
                   <>
-                    <span className="spinner"></span> Submitting...
+                    <span className="spinner"></span> {t('Submitting...')}
                   </>
                 ) : (
                   <>
@@ -398,7 +398,7 @@ export default function IssueForm({ onSubmitTicket, onTabChange }) {
                       <line x1="22" y1="2" x2="11" y2="13"></line>
                       <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                     </svg>
-                    Submit Ticket
+                    {t('Submit Ticket')}
                   </>
                 )}
               </button>
@@ -418,8 +418,8 @@ export default function IssueForm({ onSubmitTicket, onTabChange }) {
             </svg>
           </div>
           <div>
-            <h3>IT & Network Support</h3>
-            <p>Wi-Fi access, account password resets, lab workstation setup, campus portal bugs.</p>
+            <h3>{t('IT & Network Support')}</h3>
+            <p>{t('Wi-Fi access, account password resets, lab workstation setup, campus portal bugs.')}</p>
           </div>
         </div>
 
@@ -430,8 +430,8 @@ export default function IssueForm({ onSubmitTicket, onTabChange }) {
             </svg>
           </div>
           <div>
-            <h3>Facilities & Residence</h3>
-            <p>Dormitory plumbing, HVAC, lighting, locks, classroom AV equipment repair.</p>
+            <h3>{t('Facilities & Residence')}</h3>
+            <p>{t('Dormitory plumbing, HVAC, lighting, locks, classroom AV equipment repair.')}</p>
           </div>
         </div>
 
@@ -442,7 +442,7 @@ export default function IssueForm({ onSubmitTicket, onTabChange }) {
             </svg>
           </div>
           <div>
-            <h3>Urgent Campus Dispatch</h3>
+            <h3>{t('Urgent Campus Dispatch')}</h3>
             <p>For immediate emergencies call Campus Safety at <strong>ext. 5555</strong> (24/7).</p>
           </div>
         </div>

@@ -5,6 +5,8 @@ import TicketList from './components/TicketList';
 import AdminDashboard from './components/AdminDashboard';
 import TicketModal from './components/TicketModal';
 import Toast from './components/Toast';
+import RecyclingTips from './components/RecyclingTips';
+import { translate } from './utils/language';
 import { STATUSES } from './data/constants';
 import {
   loadTickets,
@@ -20,9 +22,12 @@ import './App.css';
 export default function App() {
   const [tickets, setTickets] = useState(() => loadTickets());
   const [theme, setTheme] = useState(() => loadTheme());
+  const [language, setLanguage] = useState('en');
+  const [campus, setCampus] = useState('Main Campus');
   const [activeTab, setActiveTab] = useState('submit');
   const [selectedTicketId, setSelectedTicketId] = useState(null);
   const [toasts, setToasts] = useState([]);
+  const t = (text) => translate(text, language);
 
   // Sync to localStorage whenever tickets change
   useEffect(() => {
@@ -183,13 +188,17 @@ export default function App() {
   };
 
   return (
-    <div className="campus-app" data-theme={theme}>
+    <div className="campus-app" data-theme={theme} data-language={language} dir={language === 'ur' ? 'rtl' : 'ltr'}>
       <Header
         activeTab={activeTab}
         onTabChange={setActiveTab}
         ticketStats={ticketStats}
         theme={theme}
         onThemeChange={setTheme}
+        language={language}
+        onLanguageChange={setLanguage}
+        campus={campus}
+        onCampusChange={setCampus}
       />
 
       <main className="app-main">
@@ -197,6 +206,7 @@ export default function App() {
           <IssueForm
             onSubmitTicket={handleAddTicket}
             onTabChange={setActiveTab}
+            language={language}
           />
         )}
 
@@ -205,7 +215,12 @@ export default function App() {
             tickets={tickets}
             onSelectTicket={(ticket) => setSelectedTicketId(ticket.id)}
             onTabChange={setActiveTab}
+            language={language}
           />
+        )}
+
+        {activeTab === 'recycling' && (
+          <RecyclingTips onTabChange={setActiveTab} language={language} />
         )}
 
         {activeTab === 'admin' && (
@@ -216,6 +231,7 @@ export default function App() {
             onSelectTicket={(ticket) => setSelectedTicketId(ticket.id)}
             onResetSeedData={handleResetSeedData}
             onClearAll={handleClearAll}
+            language={language}
           />
         )}
       </main>
@@ -228,11 +244,12 @@ export default function App() {
           onClose={() => setSelectedTicketId(null)}
           onUpdateStatus={handleUpdateStatus}
           onDeleteTicket={handleDeleteTicket}
+          language={language}
         />
       )}
 
       {/* Toast Notifications */}
-      <Toast toasts={toasts} onDismiss={removeToast} />
+      <Toast toasts={toasts} onDismiss={removeToast} language={language} />
 
       {/* Campus Portal Footer */}
       <footer className="site-footer">
@@ -243,15 +260,29 @@ export default function App() {
                 <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
                 <path d="M6 12v5c3 3 9 3 12 0v-5"/>
               </svg>
-              <span>Campus Helpdesk & Operations</span>
+              <span>{t('Campus Helpdesk & Operations')}</span>
             </div>
             <p className="footer-text">
-              Unified support platform serving students, faculty, dorms, facilities, and campus operations.
+              {t('Unified support platform serving students, faculty, dorms, facilities, and campus operations.')}
             </p>
+            <div className="footer-social-links" aria-label={language === 'ur' ? 'سوشل میڈیا لنکس' : 'Social media links'}>
+              <a href="https://www.facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook" title="Facebook">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3c-3.31 0-5 1.69-5 5v3H6v4h3v8h4v-8h3.5l.5-4H13V9c0-.66.34-1 1-1Z" /></svg>
+              </a>
+              <a href="https://www.instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram" title="Instagram">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" className="social-fill" /></svg>
+              </a>
+              <a href="https://x.com" target="_blank" rel="noreferrer" aria-label="X" title="X">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.77 7.74L23.2 22h-6.24l-4.89-6.39L6.48 22H3.36l7.24-8.28L2.8 2h6.4l4.42 5.84L18.9 2Zm-1.1 17.8h1.73L8.27 4.08H6.41L17.8 19.8Z" /></svg>
+              </a>
+              <a href="https://www.linkedin.com" target="_blank" rel="noreferrer" aria-label="LinkedIn" title="LinkedIn">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3.5A2.5 2.5 0 1 1 5 8a2.5 2.5 0 0 1 0-4.5ZM3 9h4v12H3V9Zm6 0h3.8v1.64h.05c.53-1 1.82-2.06 3.75-2.06 4 0 4.75 2.63 4.75 6.05V21h-4v-5.66c0-1.35-.03-3.09-1.88-3.09-1.88 0-2.17 1.47-2.17 2.99V21H9V9Z" /></svg>
+              </a>
+            </div>
           </div>
 
           <div className="footer-col">
-            <h4>Support Hours & Contact</h4>
+            <h4>{t('Support Hours & Contact')}</h4>
             <ul className="footer-links">
               <li>IT Help Desk: Mon–Fri, 8 AM – 8 PM</li>
               <li>Facilities Emergency: 24/7 Hotline ext. 5555</li>
@@ -260,16 +291,16 @@ export default function App() {
           </div>
 
           <div className="footer-col">
-            <h4>Quick Navigation</h4>
+            <h4>{t('Quick Navigation')}</h4>
             <div className="footer-buttons">
               <button type="button" onClick={() => setActiveTab('submit')}>
-                Submit Request
+                {t('Submit Request')}
               </button>
               <button type="button" onClick={() => setActiveTab('tracker')}>
-                Track Existing Issue
+                {t('Track Existing Issue')}
               </button>
               <button type="button" onClick={() => setActiveTab('admin')}>
-                Admin Dashboard ({ticketStats.pending} Pending)
+                {t('Admin Dashboard')} ({ticketStats.pending} {t('Pending')})
               </button>
             </div>
           </div>
@@ -281,7 +312,7 @@ export default function App() {
           </div>
           <div className="footer-system-status">
             <span className="dot dot-emerald"></span>
-            All Campus Systems Operational
+            {t('All Campus Systems Operational')}
           </div>
         </div>
       </footer>

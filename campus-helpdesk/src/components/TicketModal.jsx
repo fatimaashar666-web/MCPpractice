@@ -6,8 +6,10 @@ import {
   PRIORITY_META,
 } from '../data/constants';
 import { formatDate } from '../utils/storage';
+import { translate } from '../utils/language';
 
-export default function TicketModal({ ticket, onClose, onUpdateStatus, onDeleteTicket }) {
+export default function TicketModal({ ticket, onClose, onUpdateStatus, onDeleteTicket, language }) {
+  const t = (text) => translate(text, language);
   const [noteText, setNoteText] = useState(ticket?.adminNote || '');
   const [prevAdminNote, setPrevAdminNote] = useState(ticket?.adminNote || '');
   const [copied, setCopied] = useState(false);
@@ -104,7 +106,7 @@ export default function TicketModal({ ticket, onClose, onUpdateStatus, onDeleteT
         <div className="modal-body">
           {/* Status Quick Switch Bar */}
           <div className="status-quick-switch-bar">
-            <span className="switch-label">Update Status:</span>
+            <span className="switch-label">{t('Update Status:')}</span>
             <div className="status-switch-buttons">
               {STATUS_LIST.map((statusName) => {
                 const isCurrent = ticket.status === statusName;
@@ -143,46 +145,46 @@ export default function TicketModal({ ticket, onClose, onUpdateStatus, onDeleteT
           {/* Ticket Information Grid */}
           <div className="ticket-info-grid">
             <div className="info-box">
-              <span className="info-label">Submitter</span>
+              <span className="info-label">{t('Submitter')}</span>
               <span className="info-value">{ticket.submitterName}</span>
               <span className="info-sub">{ticket.submitterEmail}</span>
             </div>
 
             <div className="info-box">
-              <span className="info-label">Student / Employee ID</span>
+              <span className="info-label">{t('Student / Employee ID')}</span>
               <span className="info-value">{ticket.studentId || 'N/A'}</span>
             </div>
 
             <div className="info-box">
-              <span className="info-label">Campus Location</span>
+              <span className="info-label">{t('Campus Location')}</span>
               <span className="info-value">{ticket.location}</span>
             </div>
 
             <div className="info-box">
-              <span className="info-label">Category</span>
+              <span className="info-label">{t('Category')}</span>
               <span className="info-value">{ticket.category}</span>
             </div>
 
             <div className="info-box">
-              <span className="info-label">Date Submitted</span>
+              <span className="info-label">{t('Date Submitted')}</span>
               <span className="info-value">{formatDate(ticket.createdAt)}</span>
             </div>
 
             <div className="info-box">
-              <span className="info-label">Last Updated</span>
+              <span className="info-label">{t('Last Updated')}</span>
               <span className="info-value">{formatDate(ticket.updatedAt || ticket.createdAt)}</span>
             </div>
           </div>
 
           {/* Description Section */}
           <div className="detail-section">
-            <h4 className="section-label">Detailed Description</h4>
+            <h4 className="section-label">{t('Detailed Description')}</h4>
             <div className="description-text-box">{ticket.description}</div>
           </div>
 
           {/* Admin / Technician Remarks */}
           <div className="detail-section">
-            <h4 className="section-label">Campus Staff / Technician Notes</h4>
+            <h4 className="section-label">{t('Campus Staff / Technician Notes')}</h4>
             <div className="admin-notes-area">
               <textarea
                 rows="3"
@@ -197,7 +199,7 @@ export default function TicketModal({ ticket, onClose, onUpdateStatus, onDeleteT
                   className="btn btn-secondary btn-sm"
                   onClick={handleSaveNote}
                 >
-                  Save Note
+                  {t('Save Note')}
                 </button>
               </div>
             </div>
@@ -206,7 +208,7 @@ export default function TicketModal({ ticket, onClose, onUpdateStatus, onDeleteT
           {/* Activity / Status History */}
           {ticket.history && ticket.history.length > 0 && (
             <div className="detail-section">
-              <h4 className="section-label">Activity & Status History</h4>
+              <h4 className="section-label">{t('Activity & Status History')}</h4>
               <div className="timeline-trail">
                 {ticket.history.map((event, index) => {
                   const meta = STATUS_META[event.status] || STATUS_META[STATUSES.PENDING];
@@ -242,11 +244,11 @@ export default function TicketModal({ ticket, onClose, onUpdateStatus, onDeleteT
               }
             }}
           >
-            Delete Ticket
+            {t('Delete Ticket')}
           </button>
 
           <button type="button" className="btn btn-secondary" onClick={onClose}>
-            Close
+            {t('Close')}
           </button>
         </div>
       </div>

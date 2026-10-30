@@ -1,8 +1,10 @@
 import { useState, useMemo } from 'react';
 import { STATUSES, STATUS_META, PRIORITY_META, CATEGORIES } from '../data/constants';
 import { formatDate, formatTimeAgo } from '../utils/storage';
+import { translate } from '../utils/language';
 
-export default function TicketList({ tickets, onSelectTicket, onTabChange }) {
+export default function TicketList({ tickets, onSelectTicket, onTabChange, language }) {
+  const t = (text) => translate(text, language);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [categoryFilter, setCategoryFilter] = useState('ALL');
@@ -49,10 +51,8 @@ export default function TicketList({ tickets, onSelectTicket, onTabChange }) {
     <div className="tracker-section">
       <div className="section-header-row">
         <div>
-          <h1 className="section-title">Track Campus Issues</h1>
-          <p className="section-subtitle">
-            Search your ticket status, review progress updates from technicians, and track resolution timelines.
-          </p>
+          <h1 className="section-title">{t('Track Campus Issues')}</h1>
+          <p className="section-subtitle">{t('Search your ticket status, review progress updates from technicians, and track resolution timelines.')}</p>
         </div>
         <button
           type="button"
@@ -63,7 +63,7 @@ export default function TicketList({ tickets, onSelectTicket, onTabChange }) {
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
-          New Ticket
+          {t('New Ticket')}
         </button>
       </div>
 
@@ -76,10 +76,10 @@ export default function TicketList({ tickets, onSelectTicket, onTabChange }) {
           </svg>
           <input
             type="text"
-            placeholder="Search by ticket ID (e.g. TCK-1001), keywords, submitter name or location..."
+            placeholder={t('Search by ticket ID (e.g. TCK-1001), keywords, submitter name or location...')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            aria-label="Search tickets"
+            aria-label={t('Search tickets')}
           />
           {searchQuery && (
             <button
@@ -104,7 +104,7 @@ export default function TicketList({ tickets, onSelectTicket, onTabChange }) {
               className={`status-tab ${statusFilter === 'ALL' ? 'active' : ''}`}
               onClick={() => setStatusFilter('ALL')}
             >
-              All Statuses <span className="tab-count">{counts.all}</span>
+              {t('All Statuses')} <span className="tab-count">{counts.all}</span>
             </button>
             <button
               type="button"
@@ -113,7 +113,7 @@ export default function TicketList({ tickets, onSelectTicket, onTabChange }) {
               className={`status-tab ${statusFilter === STATUSES.PENDING ? 'active tab-pending' : ''}`}
               onClick={() => setStatusFilter(STATUSES.PENDING)}
             >
-              <span className="dot dot-amber"></span> Pending <span className="tab-count">{counts.pending}</span>
+              <span className="dot dot-amber"></span> {t('Pending')} <span className="tab-count">{counts.pending}</span>
             </button>
             <button
               type="button"
@@ -122,7 +122,7 @@ export default function TicketList({ tickets, onSelectTicket, onTabChange }) {
               className={`status-tab ${statusFilter === STATUSES.IN_PROGRESS ? 'active tab-in-progress' : ''}`}
               onClick={() => setStatusFilter(STATUSES.IN_PROGRESS)}
             >
-              <span className="dot dot-blue"></span> In Progress <span className="tab-count">{counts.inProgress}</span>
+              <span className="dot dot-blue"></span> {t('In Progress')} <span className="tab-count">{counts.inProgress}</span>
             </button>
             <button
               type="button"
@@ -131,7 +131,7 @@ export default function TicketList({ tickets, onSelectTicket, onTabChange }) {
               className={`status-tab ${statusFilter === STATUSES.RESOLVED ? 'active tab-resolved' : ''}`}
               onClick={() => setStatusFilter(STATUSES.RESOLVED)}
             >
-              <span className="dot dot-emerald"></span> Resolved <span className="tab-count">{counts.resolved}</span>
+              <span className="dot dot-emerald"></span> {t('Resolved')} <span className="tab-count">{counts.resolved}</span>
             </button>
           </div>
 
@@ -142,7 +142,7 @@ export default function TicketList({ tickets, onSelectTicket, onTabChange }) {
               className="filter-select"
               aria-label="Filter by category"
             >
-              <option value="ALL">All Categories</option>
+              <option value="ALL">{t('All Categories')}</option>
               {CATEGORIES.map((c) => (
                 <option key={c} value={c}>{c}</option>
               ))}
@@ -154,9 +154,9 @@ export default function TicketList({ tickets, onSelectTicket, onTabChange }) {
               className="filter-select"
               aria-label="Sort tickets"
             >
-              <option value="newest">Sort: Newest First</option>
-              <option value="oldest">Sort: Oldest First</option>
-              <option value="priority">Sort: Highest Priority</option>
+              <option value="newest">{t('Sort: Newest First')}</option>
+              <option value="oldest">{t('Sort: Oldest First')}</option>
+              <option value="priority">{t('Sort: Highest Priority')}</option>
             </select>
           </div>
         </div>
@@ -172,11 +172,11 @@ export default function TicketList({ tickets, onSelectTicket, onTabChange }) {
               <line x1="8" y1="11" x2="14" y2="11"></line>
             </svg>
           </div>
-          <h3>No matching tickets found</h3>
+          <h3>{t('No matching tickets found')}</h3>
           <p>
             {searchQuery || statusFilter !== 'ALL' || categoryFilter !== 'ALL'
-              ? 'Try adjusting your search criteria or filter options.'
-              : 'No tickets have been submitted yet.'}
+              ? t('Try adjusting your search criteria or filter options.')
+              : t('No tickets have been submitted yet')}
           </p>
           <div className="empty-actions">
             {(searchQuery || statusFilter !== 'ALL' || categoryFilter !== 'ALL') ? (
@@ -189,7 +189,7 @@ export default function TicketList({ tickets, onSelectTicket, onTabChange }) {
                   setCategoryFilter('ALL');
                 }}
               >
-                Reset Filters
+                {t('Reset Filters')}
               </button>
             ) : (
               <button
@@ -197,7 +197,7 @@ export default function TicketList({ tickets, onSelectTicket, onTabChange }) {
                 className="btn btn-primary"
                 onClick={() => onTabChange('submit')}
               >
-                Submit Your First Ticket
+                {t('Submit Your First Ticket')}
               </button>
             )}
           </div>
@@ -268,17 +268,17 @@ export default function TicketList({ tickets, onSelectTicket, onTabChange }) {
                   <div className="progress-steps">
                     <div className={`step-item ${progressStage >= 1 ? 'active' : ''}`}>
                       <div className="step-circle">1</div>
-                      <span>Pending</span>
+                      <span>{t('Pending')}</span>
                     </div>
                     <div className={`step-line ${progressStage >= 2 ? 'active' : ''}`}></div>
                     <div className={`step-item ${progressStage >= 2 ? 'active' : ''}`}>
                       <div className="step-circle">2</div>
-                      <span>In Progress</span>
+                      <span>{t('In Progress')}</span>
                     </div>
                     <div className={`step-line ${progressStage >= 3 ? 'active' : ''}`}></div>
                     <div className={`step-item ${progressStage >= 3 ? 'active' : ''}`}>
                       <div className="step-circle">3</div>
-                      <span>Resolved</span>
+                      <span>{t('Resolved')}</span>
                     </div>
                   </div>
                 </div>
@@ -316,7 +316,7 @@ export default function TicketList({ tickets, onSelectTicket, onTabChange }) {
                       onSelectTicket(ticket);
                     }}
                   >
-                    View Details →
+                    {t('View Details →')}
                   </button>
                 </div>
               </div>

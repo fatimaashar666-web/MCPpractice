@@ -19,6 +19,115 @@
   padding: 2rem 1.5rem 4rem;
 }
 
+/* ==========================================================================\n+   Recycling Tips\n+   ========================================================================== */
+.recycling-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.recycling-hero,
+.recycling-help-card {
+  background-color: var(--surface);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.recycling-hero {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.recycling-hero-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px;
+  border-radius: 50%;
+  color: var(--emerald-600);
+  background-color: var(--emerald-50);
+}
+
+.section-eyebrow {
+  margin-bottom: 0.25rem;
+  color: var(--emerald-600);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.recycling-hero h1 {
+  color: var(--slate-900);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  line-height: 1.15;
+}
+
+.recycling-intro {
+  max-width: 680px;
+  margin-top: 0.625rem;
+  color: var(--slate-600);
+  font-size: 1rem;
+}
+
+.recycling-tips-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.recycling-tip-card {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem;
+  background-color: var(--surface);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.recycling-tip-number {
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.recycling-tip-card h2,
+.recycling-help-card h2 {
+  color: var(--slate-900);
+  font-size: 1rem;
+  font-weight: 750;
+}
+
+.recycling-tip-card p,
+.recycling-help-card p {
+  margin-top: 0.5rem;
+  color: var(--slate-600);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.recycling-help-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  background-color: var(--primary-light);
+  border-color: transparent;
+}
+
+.recycling-help-card p {
+  margin-top: 0.25rem;
+}
+
 /* Common Buttons */
 .btn {
   display: inline-flex;
@@ -196,6 +305,76 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  direction: ltr;
+}
+
+.header-leading-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+  order: -1;
+}
+
+.campus-selector {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--slate-500);
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.campus-selector select {
+  min-height: 34px;
+  padding: 0.25rem 1.75rem 0.25rem 0.625rem;
+  color: var(--slate-700);
+  background-color: var(--surface);
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-md);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.campus-selector select:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.language-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.125rem;
+  padding: 0.25rem;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-md);
+  background-color: var(--slate-100);
+}
+
+.language-option {
+  min-height: 32px;
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--radius-sm);
+  color: var(--slate-600);
+  font-size: 0.75rem;
+  font-weight: 700;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.language-option:hover {
+  color: var(--slate-900);
+}
+
+.language-option.active {
+  color: var(--slate-900);
+  background-color: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.language-option:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .brand-group {
@@ -1960,6 +2139,55 @@
   line-height: 1.5;
 }
 
+.footer-social-links {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin-top: 1rem;
+}
+
+.footer-social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  color: var(--slate-500);
+  border: 1px solid var(--slate-200);
+  border-radius: 50%;
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.footer-social-links a:hover,
+.footer-social-links a:focus-visible {
+  color: var(--primary);
+  background-color: var(--primary-light);
+  border-color: var(--primary);
+}
+
+.footer-social-links a:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.footer-social-links svg {
+  width: 17px;
+  height: 17px;
+  fill: currentColor;
+  stroke: none;
+}
+
+.footer-social-links svg rect,
+.footer-social-links svg circle:not(.social-fill) {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+
+.footer-social-links svg .social-fill {
+  fill: currentColor;
+}
+
 .footer-col h4 {
   font-size: 0.875rem;
   font-weight: 700;
@@ -2021,6 +2249,10 @@
    Responsive Media Queries
    ========================================================================== */
 @media (max-width: 1024px) {
+  .recycling-tips-grid {
+    grid-template-columns: 1fr;
+  }
+
   .stats-metric-grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -2043,6 +2275,80 @@
 }
 
 @media (max-width: 768px) {
+  .app-main {
+    padding: 1.25rem 1rem 3rem;
+  }
+
+  .form-card {
+    padding: 1.25rem;
+  }
+
+  .form-header {
+    margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .form-title {
+    font-size: 1.5rem;
+  }
+
+  .form-subtitle {
+    font-size: 0.875rem;
+  }
+
+  .quick-actions-bar {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .quick-actions-bar .btn {
+    width: 100%;
+  }
+
+  .hint-text {
+    text-align: center;
+  }
+
+  .ticket-form input,
+  .ticket-form select,
+  .ticket-form textarea {
+    font-size: 16px;
+  }
+
+  .form-footer {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .form-note {
+    align-items: flex-start;
+    max-width: none;
+  }
+
+  .form-actions {
+    width: 100%;
+  }
+
+  .form-actions .btn {
+    flex: 1;
+  }
+
+  .recycling-hero {
+    padding: 1.5rem;
+  }
+
+  .recycling-help-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .header-leading-controls {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
   .header-container {
     flex-direction: column;
     align-items: flex-start;
@@ -2101,6 +2407,51 @@
 }
 
 @media (max-width: 480px) {
+  .app-main {
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+  }
+
+  .form-card {
+    padding: 1rem;
+    border-radius: var(--radius-md);
+  }
+
+  .form-title {
+    font-size: 1.35rem;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions .btn {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .priority-selector {
+    gap: 0.375rem;
+  }
+
+  .priority-pill {
+    min-height: 42px;
+    padding-right: 0.375rem;
+    padding-left: 0.375rem;
+  }
+
+  .recycling-hero {
+    flex-direction: column;
+  }
+
+  .recycling-tip-card {
+    padding: 1.25rem;
+  }
+
+  .recycling-help-card .btn {
+    width: 100%;
+  }
+
   .stats-metric-grid {
     grid-template-columns: 1fr;
   }

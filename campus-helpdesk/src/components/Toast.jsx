@@ -1,4 +1,6 @@
-export default function Toast({ toasts, onDismiss }) {
+import { translate } from '../utils/language';
+
+export default function Toast({ toasts, onDismiss, language }) {
   if (!toasts || toasts.length === 0) return null;
 
   return (
@@ -34,8 +36,8 @@ export default function Toast({ toasts, onDismiss }) {
             )}
           </div>
           <div className="toast-message">
-            {toast.title && <div className="toast-title">{toast.title}</div>}
-            <div className="toast-text">{toast.message}</div>
+            {toast.title && <div className="toast-title">{translate(toast.title, language)}</div>}
+            <div className="toast-text">{translate(toast.message, language)}</div>
           </div>
           <button
             type="button"
